@@ -3,8 +3,7 @@ require "bundler/setup"
 require "sinatra"
 require File.join(File.dirname(__FILE__), "environment")
 require 'ipa'
-require 'plist'
-
+require 'nokogiri-plist'
 configure do
   set :views, "#{File.dirname(__FILE__)}/views"
   set :show_exceptions, :after_handler
@@ -39,7 +38,7 @@ module IPALibs
       path = file_in_ipa_path(filename)
       ipa = ipa_local(path)
       app_url = ipa_url(filename)
-      plist = PlistHelper::construct_plist(ipa.identifier, ipa.version, app_url, ipa.name)
+      plist = PlistHelper::construct_plist(ipa.identifier, ipa.version_string, app_url, ipa.name)
       plist.to_plist_xml
     end
 
@@ -51,7 +50,7 @@ module IPALibs
     end
 
     def ipa_url(full_ipa_name)
-      "#{FULL_IPA_PATH}#{full_ipa_name}"
+      "#{FULL_IPA_PATH}#{full_ipa_name}.ipa"
     end
 
   end
