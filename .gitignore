@@ -5,3 +5,6 @@ log/*
 *.swp
 *.swo
 .env
+
+public/binaries
+vendor/
